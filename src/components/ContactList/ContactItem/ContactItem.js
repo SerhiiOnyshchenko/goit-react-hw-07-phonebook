@@ -8,7 +8,8 @@ export default function ContactItem({ id, name, number }) {
       useDeleteContactMutation();
    return (
       <li className={s.item} id={id}>
-         {name}: {number}
+         <span className={s.name}>{name}: </span>
+         {number}
          <div className={sBtn.btn + ' ' + s.btn}>
             <button type="button" onClick={() => deleteContact(id)}>
                {isDeleting ? 'Deleting...' : 'Delete'}

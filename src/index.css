@@ -9,8 +9,9 @@
 :active {
 	outline: none;
 }
-
-html,
+html {
+	width: 100vw;
+}
 body {
 	height: 100%;
 	width: 100%;

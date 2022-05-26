@@ -13,6 +13,10 @@
 .item:nth-child(even) {
 	background: #5c007e;
 }
+
+.name {
+	min-width: 200px;
+}
 .btn {
 	width: 80px;
 	height: 30px;

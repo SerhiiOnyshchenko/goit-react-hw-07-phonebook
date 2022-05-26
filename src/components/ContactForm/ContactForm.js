@@ -2,12 +2,14 @@ import { useState } from 'react';
 import s from './ContactForm.module.css';
 import sBtn from '../../App.module.css';
 import { useAddContactMutation } from 'Redux/contacts/contactsApi';
+import PropTypes from 'prop-types';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function ContactForm({ contacts }) {
    const [name, setName] = useState('');
    const [phone, setPhone] = useState('');
    const [addContact, { isLoading }] = useAddContactMutation();
-
    const onSubmitForm = async e => {
       e.preventDefault();
       if (
@@ -16,10 +18,11 @@ export default function ContactForm({ contacts }) {
                contact.name.toLocaleLowerCase() === name.toLocaleLowerCase()
          )
       ) {
-         alert(name + ' is alredy in contacts');
+         toast.warning(`${name} is alredy in contacts`);
          return;
       }
       await addContact({ name, phone });
+      toast.success(`Contact is create!`);
       setName('');
       setPhone('');
    };
@@ -57,6 +60,24 @@ export default function ContactForm({ contacts }) {
                Add contact
             </button>
          </div>
+         <ToastContainer
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+         />
       </form>
    );
 }
+
+ContactForm.propTypes = {
+   contacts: PropTypes.arrayOf(
+      PropTypes.shape({
+         name: PropTypes.string.isRequired,
+      })
+   ),
+};

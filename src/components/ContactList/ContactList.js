@@ -1,21 +1,18 @@
 import ContactItem from './ContactItem/ContactItem';
 import s from './ContactList.module.css';
+import PropTypes from 'prop-types';
 
-export default function ContactList({ contacts, error, isFetching }) {
+export default function ContactList({ contacts, error, isLoading }) {
    return (
       <div>
          {error ? (
             <h2>{error.data}</h2>
-         ) : contacts ? (
+         ) : isLoading ? (
+            <h2>Loadong...</h2>
+         ) : contacts?.length ? (
             <ul className={s.list}>
                {contacts.map(({ id, name, phone }) => (
-                  <ContactItem
-                     key={id}
-                     id={id}
-                     name={name}
-                     number={phone}
-                     isFetching={isFetching}
-                  />
+                  <ContactItem key={id} id={id} name={name} number={phone} />
                ))}
             </ul>
          ) : (
@@ -24,3 +21,15 @@ export default function ContactList({ contacts, error, isFetching }) {
       </div>
    );
 }
+
+ContactList.propTypes = {
+   contacts: PropTypes.arrayOf(
+      PropTypes.shape({
+         id: PropTypes.string.isRequired,
+         name: PropTypes.string.isRequired,
+         phone: PropTypes.string.isRequired,
+      })
+   ),
+   error: PropTypes.object,
+   isLoading: PropTypes.bool.isRequired,
+};

@@ -12,14 +12,11 @@ export const contactsApi = createApi({
          providesTags: ['Contacts'],
       }),
       addContact: builder.mutation({
-         query: ({ name, phone }) => {
-            console.log('phone', phone);
-            return {
-               url: '/contacts',
-               method: 'POST',
-               body: { name, phone },
-            };
-         },
+         query: ({ name, phone }) => ({
+            url: '/contacts',
+            method: 'POST',
+            body: { name, phone },
+         }),
          invalidatesTags: ['Contacts'],
       }),
       deleteContact: builder.mutation({
