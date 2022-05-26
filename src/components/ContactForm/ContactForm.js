@@ -1,23 +1,14 @@
 import { useState } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { addContact } from '../../Redux/contacts/contact-actions';
-// import { getContacts } from '../../Redux/contacts/contact-selectors';
 import s from './ContactForm.module.css';
 import sBtn from '../../App.module.css';
 import { useAddContactMutation } from 'Redux/contacts/contactsApi';
 
 export default function ContactForm({ contacts }) {
    const [name, setName] = useState('');
-   const [number, setNumber] = useState('');
-   // const contacts = useSelector(getContacts);
-   // const dispatch = useDispatch();
-   const [addContact] = useAddContactMutation();
+   const [phone, setPhone] = useState('');
+   const [addContact, { isLoading }] = useAddContactMutation();
 
-   // useEffect(() => {
-   //    localStorage.setItem('contacts', JSON.stringify(contacts));
-   // }, [contacts]);
-
-   const onSubmitForm = e => {
+   const onSubmitForm = async e => {
       e.preventDefault();
       if (
          contacts.find(
@@ -28,9 +19,9 @@ export default function ContactForm({ contacts }) {
          alert(name + ' is alredy in contacts');
          return;
       }
-      addContact(name, number);
+      await addContact({ name, phone });
       setName('');
-      setNumber('');
+      setPhone('');
    };
 
    return (
@@ -51,10 +42,10 @@ export default function ContactForm({ contacts }) {
          <label className={s.label}>
             Number
             <input
-               onChange={e => setNumber(e.target.value)}
+               onChange={e => setPhone(e.target.value)}
                type="tel"
                name="number"
-               value={number}
+               value={phone}
                placeholder="XXX-XX-XX"
                pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
                title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
@@ -62,7 +53,9 @@ export default function ContactForm({ contacts }) {
             />
          </label>
          <div className={sBtn.btn + ' ' + s.btn}>
-            <button type="submit">Add contact</button>
+            <button type="submit" disabled={isLoading}>
+               Add contact
+            </button>
          </div>
       </form>
    );

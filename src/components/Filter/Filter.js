@@ -1,8 +1,6 @@
 import s from './Filter.module.css';
-import { useState } from 'react';
 
-export default function Filter() {
-   const [filter, setFilter] = useState('');
+export default function Filter({ filter, setFilter }) {
    return (
       <label className={s.label}>
          Find contact by name
