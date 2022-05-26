@@ -1,4 +1,5 @@
 import s from './Filter.module.css';
+import { useState } from 'react';
 
 export default function Filter() {
    const [filter, setFilter] = useState('');

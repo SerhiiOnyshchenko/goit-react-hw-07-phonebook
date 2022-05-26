@@ -1,6 +1,6 @@
 import ContactItem from './ContactItem/ContactItem';
 import s from './ContactList.module.css';
-import { useFetchContactsQuery } from 'Redux/contacts/contactsApi';
+// import { useFetchContactsQuery } from 'Redux/contacts/contactsApi';
 
 export default function ContactList({ contacts, error, isFetching }) {
    // const { data, error, isFetching } = useFetchContactsQuery();
