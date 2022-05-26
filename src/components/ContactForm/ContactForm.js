@@ -1,19 +1,21 @@
 import { useState } from 'react';
 import s from './ContactForm.module.css';
 import sBtn from '../../App.module.css';
-import { useAddContactMutation } from 'Redux/contacts/contactsApi';
-import PropTypes from 'prop-types';
+import { useAddContactMutation } from 'redux/contacts/contactsApi';
+import { useFetchContactsQuery } from 'redux/contacts/contactsApi';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function ContactForm({ contacts }) {
+export default function ContactForm() {
+   const { data } = useFetchContactsQuery();
    const [name, setName] = useState('');
    const [phone, setPhone] = useState('');
    const [addContact, { isLoading }] = useAddContactMutation();
+
    const onSubmitForm = async e => {
       e.preventDefault();
       if (
-         contacts.find(
+         data.find(
             contact =>
                contact.name.toLocaleLowerCase() === name.toLocaleLowerCase()
          )
@@ -73,11 +75,3 @@ export default function ContactForm({ contacts }) {
       </form>
    );
 }
-
-ContactForm.propTypes = {
-   contacts: PropTypes.arrayOf(
-      PropTypes.shape({
-         name: PropTypes.string.isRequired,
-      })
-   ),
-};

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import s from './ContactItem.module.css';
 import sBtn from '../../../App.module.css';
-import { useDeleteContactMutation } from 'Redux/contacts/contactsApi';
+import { useDeleteContactMutation } from 'redux/contacts/contactsApi';
 
 export default function ContactItem({ id, name, number }) {
    const [deleteContact, { isLoading: isDeleting }] =
